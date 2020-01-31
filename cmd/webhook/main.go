@@ -32,11 +32,24 @@ import (
 	"github.com/jetstack/cert-manager/pkg/webhook/server"
 )
 
+const (
+	defaultCipherSuites = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256," +
+		"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384," +
+		"TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256," +
+		"TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA," +
+		"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA," +
+		"TLS_RSA_WITH_AES_128_GCM_SHA256," +
+		"TLS_RSA_WITH_AES_256_GCM_SHA384," +
+		"TLS_RSA_WITH_AES_128_CBC_SHA," +
+		"TLS_RSA_WITH_AES_256_CBC_SHA"
+)
+
 var (
-	securePort  int
-	healthzPort int
-	tlsCertFile string
-	tlsKeyFile  string
+	securePort      int
+	healthzPort     int
+	tlsCertFile     string
+	tlsKeyFile      string
+	tlsCipherSuites string
 )
 
 func init() {
@@ -44,6 +57,8 @@ func init() {
 	flag.IntVar(&securePort, "secure-port", 6443, "port number to listen on for secure TLS connections")
 	flag.StringVar(&tlsCertFile, "tls-cert-file", "", "path to the file containing the TLS certificate to serve with")
 	flag.StringVar(&tlsKeyFile, "tls-private-key-file", "", "path to the file containing the TLS private key to serve with")
+	flag.StringVar(&tlsCipherSuites, "tls-cipher-suites", defaultCipherSuites, "comma separated list of TLS cipher suites")
+
 }
 
 var validationHook handlers.ValidatingAdmissionHook = handlers.NewRegistryBackedValidator(logs.Log, webhook.Scheme, webhook.ValidationRegistry)
@@ -74,6 +89,7 @@ func main() {
 		HealthzAddr:       fmt.Sprintf(":%d", healthzPort),
 		EnablePprof:       true,
 		CertificateSource: source,
+		CipherSuites:      tlsCipherSuites,
 		ValidationWebhook: validationHook,
 		MutationWebhook:   mutationHook,
 		ConversionWebhook: conversionHook,

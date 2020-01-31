@@ -6,6 +6,7 @@ go_library(
         "server.go",
         "source.go",
         "tls_file_source.go",
+        "tls_cipher_suite.go",
     ],
     importpath = "github.com/jetstack/cert-manager/pkg/webhook/server",
     visibility = ["//visibility:public"],

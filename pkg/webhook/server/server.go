@@ -94,6 +94,9 @@ type Server struct {
 	// Log is an optional logger to write informational and error messages to.
 	// If not specified, no messages will be logged.
 	Log logr.Logger
+
+	// CipherSuites is a comma separated list of TLS Cipher Suite names
+	CipherSuites string
 }
 
 func (s *Server) Run(stopCh <-chan struct{}) error {
@@ -141,6 +144,7 @@ func (s *Server) Run(stopCh <-chan struct{}) error {
 			GetCertificate:           s.CertificateSource.GetCertificate,
 			MinVersion:               tls.VersionTLS12,
 			PreferServerCipherSuites: true,
+			CipherSuites:             cipherSuiteIds(s.CipherSuites),
 		})
 	} else {
 		s.Log.Info("listening for insecure connections", "address", s.ListenAddr)
