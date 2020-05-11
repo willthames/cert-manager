@@ -4,7 +4,7 @@ go 1.12
 
 replace github.com/prometheus/client_golang => github.com/prometheus/client_golang v0.9.4
 
-replace golang.org/x/crypto => github.com/munnerz/crypto v0.0.0-20191203200931-e1844778daa5
+replace golang.org/x/crypto => github.com/willthames/crypto v0.0.0-20200428034659-111d1c121a85
 
 require (
 	github.com/Azure/azure-sdk-for-go v32.5.0+incompatible
@@ -14,6 +14,8 @@ require (
 	github.com/Azure/go-autorest/autorest/validation v0.2.0 // indirect
 	github.com/Venafi/vcert v0.0.0-20200310111556-eba67a23943f
 	github.com/aws/aws-sdk-go v1.24.1
+	github.com/bazelbuild/bazel-gazelle v0.20.0 // indirect
+	github.com/bazelbuild/rules_go v0.22.4 // indirect
 	github.com/cloudflare/cloudflare-go v0.8.5
 	github.com/cpu/goacmedns v0.0.0-20180701200144-565ecf2a84df
 	github.com/digitalocean/godo v1.29.0

@@ -84,6 +84,7 @@ verify_chart:
 ############
 $(CMDS):
 	bazel build \
+		--platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 \
 		//cmd/$@
 
 # Generate targets
